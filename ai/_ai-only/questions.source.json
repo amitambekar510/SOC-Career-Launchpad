@@ -1,0 +1,1107 @@
+{
+  "version": 1,
+  "note": "AI-ONLY source of truth. Contains answers. Learners: reading this defeats your own learning.",
+  "questions": [
+    {
+      "id": "s00-q1",
+      "section": "s00-start-here",
+      "type": "mcq",
+      "objective": "Explain what a SOC does",
+      "prompt": "A SOC analyst's main job is to:",
+      "options": {
+        "A": "Build company websites",
+        "B": "Watch for suspicious activity, decide if it is real, and respond",
+        "C": "Write marketing emails",
+        "D": "Repair office printers"
+      },
+      "answer": "B",
+      "why": "A SOC detects, decides and responds to security events."
+    },
+    {
+      "id": "s00-q2",
+      "section": "s00-start-here",
+      "type": "mcq",
+      "objective": "Know alert vocabulary",
+      "prompt": "In the mall-security analogy, 'it was just a cat that set off the alarm' is a:",
+      "options": {
+        "A": "True positive",
+        "B": "False positive",
+        "C": "Escalation",
+        "D": "Containment"
+      },
+      "answer": "B",
+      "why": "An alert about something harmless is a false positive."
+    },
+    {
+      "id": "s00-q3",
+      "section": "s00-start-here",
+      "type": "mcq",
+      "objective": "Tell internal from external threats",
+      "prompt": "Which is an INTERNAL threat?",
+      "options": {
+        "A": "A hacker scanning the internet",
+        "B": "An employee copying sensitive files to a personal cloud drive",
+        "C": "A ransomware gang's phishing email",
+        "D": "A botnet"
+      },
+      "answer": "B",
+      "why": "Internal threats come from people or accounts inside the organisation, accidental or deliberate."
+    },
+    {
+      "id": "s00-q4",
+      "section": "s00-start-here",
+      "type": "mcq",
+      "objective": "Know the L1 golden rule",
+      "prompt": "When you are unsure whether an alert is serious, a new analyst should:",
+      "options": {
+        "A": "Close it to keep the queue clean",
+        "B": "Ignore it",
+        "C": "Escalate with clear notes",
+        "D": "Delete the evidence"
+      },
+      "answer": "C",
+      "why": "When unsure, escalate with facts. Never guess silently."
+    },
+    {
+      "id": "s01-q1",
+      "section": "s01-networking",
+      "type": "mcq",
+      "objective": "Place attacks on OSI layers",
+      "prompt": "Which OSI layer deals with IP addresses and routing?",
+      "options": {
+        "A": "Layer 2",
+        "B": "Layer 3",
+        "C": "Layer 4",
+        "D": "Layer 7"
+      },
+      "answer": "B",
+      "why": "Layer 3 is the Network layer."
+    },
+    {
+      "id": "s01-q2",
+      "section": "s01-networking",
+      "type": "mcq",
+      "objective": "Recall key ports",
+      "prompt": "Which port does RDP (Remote Desktop) use by default?",
+      "options": {
+        "A": "22",
+        "B": "443",
+        "C": "3389",
+        "D": "3306"
+      },
+      "answer": "C",
+      "why": "RDP uses TCP 3389."
+    },
+    {
+      "id": "s01-q3",
+      "section": "s01-networking",
+      "type": "mcq",
+      "objective": "Explain the TCP handshake",
+      "prompt": "What is the correct order of the TCP 3-way handshake?",
+      "options": {
+        "A": "ACK, SYN, SYN-ACK",
+        "B": "SYN, SYN-ACK, ACK",
+        "C": "SYN-ACK, SYN, ACK",
+        "D": "SYN, ACK, SYN-ACK"
+      },
+      "answer": "B",
+      "why": "Client SYN, server SYN-ACK, client ACK."
+    },
+    {
+      "id": "s01-q4",
+      "section": "s01-networking",
+      "type": "mcq",
+      "objective": "Read private IP ranges",
+      "prompt": "Which of these is a private (RFC1918) range?",
+      "options": {
+        "A": "8.8.8.0/24",
+        "B": "192.168.0.0/16",
+        "C": "203.0.113.0/24",
+        "D": "1.1.1.0/24"
+      },
+      "answer": "B",
+      "why": "10/8, 172.16/12 and 192.168/16 are private."
+    },
+    {
+      "id": "s02-q1",
+      "section": "s02-linux",
+      "type": "mcq",
+      "objective": "Find the right Linux log",
+      "prompt": "Which log records SSH logins on Ubuntu/Debian?",
+      "options": {
+        "A": "/var/log/kern.log",
+        "B": "/var/log/auth.log",
+        "C": "/var/log/cron",
+        "D": "/etc/shadow"
+      },
+      "answer": "B",
+      "why": "auth.log holds authentication events."
+    },
+    {
+      "id": "s02-q2",
+      "section": "s02-linux",
+      "type": "mcq",
+      "objective": "Use core commands",
+      "prompt": "Which command lets you watch a log file update live?",
+      "options": {
+        "A": "cat file.log",
+        "B": "tail -f file.log",
+        "C": "ls -la file.log",
+        "D": "chmod 755 file.log"
+      },
+      "answer": "B",
+      "why": "tail -f follows the end of the file."
+    },
+    {
+      "id": "s02-q3",
+      "section": "s02-linux",
+      "type": "mcq",
+      "objective": "Spot Linux persistence",
+      "prompt": "A cron job that runs a script from /tmp every 5 minutes, added by a non-admin user, most likely suggests:",
+      "options": {
+        "A": "A backup routine",
+        "B": "Persistence by an attacker",
+        "C": "A kernel update",
+        "D": "Normal log rotation"
+      },
+      "answer": "B",
+      "why": "Scripts in /tmp scheduled by unexpected users are a classic persistence sign."
+    },
+    {
+      "id": "s03-q1",
+      "section": "s03-security-fundamentals",
+      "type": "mcq",
+      "objective": "Apply the CIA triad",
+      "prompt": "Ransomware that encrypts files so nobody can use them mainly breaks which part of the CIA triad?",
+      "options": {
+        "A": "Confidentiality",
+        "B": "Integrity",
+        "C": "Availability",
+        "D": "Accounting"
+      },
+      "answer": "C",
+      "why": "Availability: the data can't be used."
+    },
+    {
+      "id": "s03-q2",
+      "section": "s03-security-fundamentals",
+      "type": "mcq",
+      "objective": "Walk the Kill Chain",
+      "prompt": "In the Kill Chain, malware setting up a way to survive reboots is:",
+      "options": {
+        "A": "Delivery",
+        "B": "Exploitation",
+        "C": "Installation",
+        "D": "Actions on Objectives"
+      },
+      "answer": "C",
+      "why": "Installation is where persistence is planted."
+    },
+    {
+      "id": "s03-q3",
+      "section": "s03-security-fundamentals",
+      "type": "mcq",
+      "objective": "Tell IOC from IOA",
+      "prompt": "Which is an IOA (behaviour) rather than an IOC (static clue)?",
+      "options": {
+        "A": "A known-bad file hash",
+        "B": "Word starting PowerShell that downloads a file",
+        "C": "A blocklisted IP address",
+        "D": "A malicious domain name"
+      },
+      "answer": "B",
+      "why": "IOAs describe behaviour in progress."
+    },
+    {
+      "id": "s03-q4",
+      "section": "s03-security-fundamentals",
+      "type": "mcq",
+      "objective": "Use the Pyramid of Pain",
+      "prompt": "Which indicator is hardest for an attacker to change?",
+      "options": {
+        "A": "File hashes",
+        "B": "IP addresses",
+        "C": "Domain names",
+        "D": "TTPs (their habits and methods)"
+      },
+      "answer": "D",
+      "why": "TTPs sit at the top of the pyramid."
+    },
+    {
+      "id": "s04-q1",
+      "section": "s04-attacks-and-first-response",
+      "type": "mcq",
+      "objective": "Respond to ransomware",
+      "prompt": "First action on a machine with active ransomware:",
+      "options": {
+        "A": "Power it off immediately",
+        "B": "Isolate it from the network, don't power off unless told to",
+        "C": "Pay the ransom",
+        "D": "Delete the ransom note"
+      },
+      "answer": "B",
+      "why": "Isolation stops spread and preserves memory evidence."
+    },
+    {
+      "id": "s04-q2",
+      "section": "s04-attacks-and-first-response",
+      "type": "mcq",
+      "objective": "Respond to phishing",
+      "prompt": "A user typed their password into a fake login page. A good first step is to:",
+      "options": {
+        "A": "Wait to see what happens",
+        "B": "Reset the password and revoke active sessions",
+        "C": "Tell the user to ignore it",
+        "D": "Delete the email only"
+      },
+      "answer": "B",
+      "why": "Credentials are compromised; reset and revoke sessions."
+    },
+    {
+      "id": "s04-q3",
+      "section": "s04-attacks-and-first-response",
+      "type": "mcq",
+      "objective": "Handle insider cases",
+      "prompt": "Before talking to an employee suspected of misusing data, you should:",
+      "options": {
+        "A": "Confront them immediately",
+        "B": "Involve HR/management per policy and preserve evidence",
+        "C": "Delete their account",
+        "D": "Post about it in a team chat"
+      },
+      "answer": "B",
+      "why": "Insider cases need HR/management coordination and careful evidence handling."
+    },
+    {
+      "id": "s05-q1",
+      "section": "s05-alert-handling-workflow",
+      "type": "mcq",
+      "objective": "Write good ticket notes",
+      "prompt": "A good ticket note contains:",
+      "options": {
+        "A": "Only the word 'FP'",
+        "B": "What fired, what you checked, what you found, what you did, and the next step",
+        "C": "Your opinion about the user",
+        "D": "A screenshot with no text"
+      },
+      "answer": "B",
+      "why": "Notes must let a stranger follow your work."
+    },
+    {
+      "id": "s05-q2",
+      "section": "s05-alert-handling-workflow",
+      "type": "mcq",
+      "objective": "Close alerts safely",
+      "prompt": "A ticket was closed as 'false positive', but the IP now matches fresh threat intel as a known command server. You should:",
+      "options": {
+        "A": "Leave it closed",
+        "B": "Reopen it, present the evidence and re-review",
+        "C": "Delete the ticket",
+        "D": "Close it again as duplicate"
+      },
+      "answer": "B",
+      "why": "New context means re-reviewing."
+    },
+    {
+      "id": "s05-q3",
+      "section": "s05-alert-handling-workflow",
+      "type": "mcq",
+      "objective": "Know escalation triggers",
+      "prompt": "You see what looks like confirmed ransomware (Critical). As L1 you should:",
+      "options": {
+        "A": "Close it alone after checking",
+        "B": "Escalate immediately and contain within your authority",
+        "C": "Wait until the end of your shift",
+        "D": "Ask a friend on social media"
+      },
+      "answer": "B",
+      "why": "Critical incidents need immediate escalation."
+    },
+    {
+      "id": "s06-q1",
+      "section": "s06-iocs-explained",
+      "type": "mcq",
+      "objective": "Rank IOC durability",
+      "prompt": "Which IOC type is the LEAST durable?",
+      "options": {
+        "A": "File hash",
+        "B": "TTP",
+        "C": "Tool",
+        "D": "Behaviour pattern"
+      },
+      "answer": "A",
+      "why": "Hashes change with a single byte."
+    },
+    {
+      "id": "s06-q2",
+      "section": "s06-iocs-explained",
+      "type": "mcq",
+      "objective": "Defang indicators",
+      "prompt": "Which is a correctly 'defanged' URL?",
+      "options": {
+        "A": "http://bad-site.example/login",
+        "B": "hxxp://bad-site[.]example/login",
+        "C": "bad-site.example/login (clickable)",
+        "D": "https://bad-site.example"
+      },
+      "answer": "B",
+      "why": "Defanging replaces http with hxxp and '.' with '[.]'."
+    },
+    {
+      "id": "s06-q3",
+      "section": "s06-iocs-explained",
+      "type": "mcq",
+      "objective": "Know IOC types",
+      "prompt": "A mutex IOC is:",
+      "options": {
+        "A": "A phishing email subject",
+        "B": "A name malware creates to mark a host as already infected",
+        "C": "A TLS certificate",
+        "D": "A firewall rule"
+      },
+      "answer": "B",
+      "why": "Malware uses mutex names to avoid double infection."
+    },
+    {
+      "id": "s07-q1",
+      "section": "s07-tools-siem-edr-log-analyzers",
+      "type": "mcq",
+      "objective": "Explain what a SIEM does",
+      "prompt": "What is the main job of a SIEM?",
+      "options": {
+        "A": "Block malware on a laptop",
+        "B": "Collect and normalise logs from many sources, correlate them and raise alerts",
+        "C": "Encrypt company email",
+        "D": "Replace the firewall"
+      },
+      "answer": "B",
+      "why": "A SIEM centralises logs, makes them comparable, detects patterns and alerts."
+    },
+    {
+      "id": "s07-q2",
+      "section": "s07-tools-siem-edr-log-analyzers",
+      "type": "mcq",
+      "objective": "Use EDR actions",
+      "prompt": "What does EDR 'host isolation' do?",
+      "options": {
+        "A": "Deletes the machine's files",
+        "B": "Cuts the machine off from the network but keeps the EDR link",
+        "C": "Reboots the machine",
+        "D": "Encrypts the disk"
+      },
+      "answer": "B",
+      "why": "You can still investigate while it is cut off."
+    },
+    {
+      "id": "s07-q3",
+      "section": "s07-tools-siem-edr-log-analyzers",
+      "type": "mcq",
+      "objective": "Read Windows events",
+      "prompt": "Windows Event ID 4625 means:",
+      "options": {
+        "A": "Successful logon",
+        "B": "Failed logon",
+        "C": "New process created",
+        "D": "Audit log cleared"
+      },
+      "answer": "B",
+      "why": "4624 is success, 4625 is failure."
+    },
+    {
+      "id": "s07-q4",
+      "section": "s07-tools-siem-edr-log-analyzers",
+      "type": "mcq",
+      "objective": "Explain normalisation and silent sources",
+      "prompt": "Your SIEM dashboard suddenly shows almost no events from the firewall. The best first thought is:",
+      "options": {
+        "A": "Great, no attacks today",
+        "B": "Check whether the log source or collector stopped reporting",
+        "C": "Delete the dashboard",
+        "D": "Turn off all rules"
+      },
+      "answer": "B",
+      "why": "Silence can mean a broken collector or an attacker hiding. Check source health first."
+    },
+    {
+      "id": "s11-q1",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Recall the CERT-In clock",
+      "prompt": "CERT-In's directions require reporting listed incidents within:",
+      "options": {
+        "A": "1 hour",
+        "B": "6 hours",
+        "C": "24 hours",
+        "D": "7 days"
+      },
+      "answer": "B",
+      "why": "Six hours from noticing."
+    },
+    {
+      "id": "s11-q2",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Recall CERT-In log retention",
+      "prompt": "CERT-In requires logs of ICT systems to be kept for a rolling:",
+      "options": {
+        "A": "30 days",
+        "B": "90 days",
+        "C": "180 days",
+        "D": "5 years"
+      },
+      "answer": "C",
+      "why": "180 days, within Indian jurisdiction."
+    },
+    {
+      "id": "s11-q3",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Recall the DPDP breach timeline",
+      "prompt": "Under the DPDP Rules, the detailed personal data breach report to the Data Protection Board is due within:",
+      "options": {
+        "A": "6 hours",
+        "B": "24 hours",
+        "C": "72 hours",
+        "D": "30 days"
+      },
+      "answer": "C",
+      "why": "72 hours (after an initial intimation without delay)."
+    },
+    {
+      "id": "s11-q4",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Separate law from framework",
+      "prompt": "Which of these is a certifiable AI management system standard?",
+      "options": {
+        "A": "MITRE ATT&CK",
+        "B": "ISO/IEC 42001",
+        "C": "CERT-In Directions",
+        "D": "NIST CSF"
+      },
+      "answer": "B",
+      "why": "ISO/IEC 42001:2023."
+    },
+    {
+      "id": "s11-q5",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Know NIST CSF 2.0",
+      "prompt": "Which function did NIST CSF 2.0 add to the original five?",
+      "options": {
+        "A": "Detect",
+        "B": "Recover",
+        "C": "Govern",
+        "D": "Predict"
+      },
+      "answer": "C",
+      "why": "Govern."
+    },
+    {
+      "id": "s11-q6",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Know who SEBI CSCRF is for",
+      "prompt": "SEBI's CSCRF mainly applies to:",
+      "options": {
+        "A": "Any company in India",
+        "B": "SEBI-regulated securities-market entities",
+        "C": "Only banks",
+        "D": "Only government departments"
+      },
+      "answer": "B",
+      "why": "Brokers, exchanges, depositories, fund houses and similar entities."
+    },
+    {
+      "id": "s11-q7",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Understand AI threats",
+      "prompt": "'Data poisoning' means:",
+      "options": {
+        "A": "Stealing a trained model",
+        "B": "Feeding bad data so an AI learns the wrong thing",
+        "C": "Encrypting AI files",
+        "D": "Deleting an AI's logs"
+      },
+      "answer": "B",
+      "why": "Corrupting training data."
+    },
+    {
+      "id": "s11-q8",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Apply the L1 habit",
+      "prompt": "You notice a possible reportable incident. The best habit is to:",
+      "options": {
+        "A": "Wait and watch for an hour",
+        "B": "Record the exact time you noticed and escalate",
+        "C": "Delete suspicious logs",
+        "D": "Report directly to the regulator yourself"
+      },
+      "answer": "B",
+      "why": "The clock runs from noticing; escalate to those who file."
+    },
+    {
+      "id": "s11-q9",
+      "section": "s11-regulations-and-standards",
+      "type": "mcq",
+      "objective": "Know MITRE ATT&CK",
+      "prompt": "MITRE ATT&CK is best described as:",
+      "options": {
+        "A": "A paid firewall",
+        "B": "A public catalogue of attacker tactics and techniques",
+        "C": "A law",
+        "D": "An email scanner"
+      },
+      "answer": "B",
+      "why": "A knowledge base of adversary behaviour."
+    },
+    {
+      "id": "s00-scenario",
+      "section": "s00-start-here",
+      "type": "scenario",
+      "prompt": "Explain to a friend, using a simple analogy, what a SOC does and who it protects against.",
+      "rubric": [
+        "Uses a sensible analogy (control room, guards, CCTV)",
+        "Mentions detect, respond and improve",
+        "Names external and internal threats",
+        "Plain language, no jargon dump"
+      ]
+    },
+    {
+      "id": "s01-scenario",
+      "section": "s01-networking",
+      "type": "scenario",
+      "prompt": "A host sends DNS queries to random-looking subdomains of an unfamiliar domain every few seconds. What might this be and what would you check?",
+      "rubric": [
+        "Suggests DNS tunnelling or command-and-control beaconing",
+        "Checks domain age/reputation and query pattern",
+        "Looks at the host's other activity",
+        "Correlates with proxy/firewall logs and escalates if suspicious"
+      ]
+    },
+    {
+      "id": "s02-scenario",
+      "section": "s02-linux",
+      "type": "scenario",
+      "prompt": "auth.log shows about 200 failed SSH logins from one IP followed by one success. What do you do?",
+      "rubric": [
+        "Treats the success as possibly compromised",
+        "Reviews what the session did (history, processes, connections)",
+        "Blocks or rate-limits the source",
+        "Resets the account, considers MFA, checks other accounts, escalates with notes"
+      ]
+    },
+    {
+      "id": "s03-scenario",
+      "section": "s03-security-fundamentals",
+      "type": "scenario",
+      "prompt": "Give one example of an IOC and one of an IOA, and explain why behaviour-based detection lasts longer.",
+      "rubric": [
+        "Valid IOC example (hash, IP, domain)",
+        "Valid IOA example (behaviour sequence)",
+        "Explains attackers can change IOCs easily but not habits (Pyramid of Pain)"
+      ]
+    },
+    {
+      "id": "s04-scenario",
+      "section": "s04-attacks-and-first-response",
+      "type": "scenario",
+      "prompt": "A user says they clicked a link and entered their password on a page that looked slightly wrong. Walk through your first steps.",
+      "rubric": [
+        "Resets password / revokes sessions",
+        "Checks recent sign-ins for the account",
+        "Blocks the URL/domain",
+        "Finds other recipients of the email",
+        "Notifies and documents"
+      ]
+    },
+    {
+      "id": "s05-scenario",
+      "section": "s05-alert-handling-workflow",
+      "type": "scenario",
+      "prompt": "Write a ticket note for: 'Antivirus quarantined a file on a finance laptop; the process is still running.'",
+      "rubric": [
+        "Includes what fired, who/what, what was checked",
+        "States facts, not guesses",
+        "Says the issue is not resolved because the process still runs",
+        "Lists actions (isolate if authorised) and next steps/escalation"
+      ]
+    },
+    {
+      "id": "s06-scenario",
+      "section": "s06-iocs-explained",
+      "type": "scenario",
+      "prompt": "You find the address http://bad-site.example/login and the IP 203.0.113.45. Defang them, classify each IOC type, and say which lasts longer.",
+      "rubric": [
+        "Defangs correctly (hxxp, [.])",
+        "Classifies URL/domain and IPv4",
+        "Notes IPs/URLs are short-lived and behaviour lasts longer"
+      ]
+    },
+    {
+      "id": "s07-scenario",
+      "section": "s07-tools-siem-edr-log-analyzers",
+      "type": "scenario",
+      "prompt": "EDR shows Word launching PowerShell with an encoded command. How would you use the SIEM, EDR and firewall/log analyzer together?",
+      "rubric": [
+        "Uses EDR process tree/storyline",
+        "Searches SIEM for network connections/related events from the host",
+        "Checks firewall/log analyzer for allowed/blocked outbound traffic",
+        "Builds one timeline, isolates if malicious, escalates and documents"
+      ]
+    },
+    {
+      "id": "s11-scenario",
+      "section": "s11-regulations-and-standards",
+      "type": "scenario",
+      "prompt": "At 3 AM you notice a server uploading customer data to an unknown address. Describe your first 30 minutes and which legal clocks may start.",
+      "rubric": [
+        "Records exact time noticed",
+        "Isolates the host if authorised, doesn't power off or delete logs",
+        "Escalates quickly",
+        "States personal data may be involved",
+        "Names CERT-In 6 hours and DPDP 72 hours as possible clocks (compliance decides)"
+      ]
+    },
+    {
+      "id": "s12-q1",
+      "section": "s12-windows-and-active-directory",
+      "type": "mcq",
+      "objective": "Know key Windows events",
+      "prompt": "Windows Event ID 4688 records:",
+      "options": {
+        "A": "A failed logon",
+        "B": "A new process being created",
+        "C": "The audit log being cleared",
+        "D": "A new user account"
+      },
+      "answer": "B",
+      "why": "4688 is process creation (when auditing is enabled)."
+    },
+    {
+      "id": "s12-q2",
+      "section": "s12-windows-and-active-directory",
+      "type": "mcq",
+      "objective": "Read logon types",
+      "prompt": "A logon of type 10 usually means:",
+      "options": {
+        "A": "Someone at the keyboard",
+        "B": "A scheduled task",
+        "C": "Remote Desktop (RDP)",
+        "D": "A service starting"
+      },
+      "answer": "C",
+      "why": "Type 10 is RemoteInteractive, i.e. RDP."
+    },
+    {
+      "id": "s12-q3",
+      "section": "s12-windows-and-active-directory",
+      "type": "mcq",
+      "objective": "Describe AD attacks",
+      "prompt": "Kerberoasting is when an attacker:",
+      "options": {
+        "A": "Floods a server with SYN packets",
+        "B": "Requests service tickets for service accounts and cracks them offline",
+        "C": "Encrypts files on a file server",
+        "D": "Sends phishing email"
+      },
+      "answer": "B",
+      "why": "It targets service-account passwords through their Kerberos tickets."
+    },
+    {
+      "id": "s12-q4",
+      "section": "s12-windows-and-active-directory",
+      "type": "mcq",
+      "objective": "Spot defence evasion",
+      "prompt": "Event ID 1102 on a server tells you:",
+      "options": {
+        "A": "A user logged in",
+        "B": "A scheduled task was created",
+        "C": "The security audit log was cleared",
+        "D": "A patch was installed"
+      },
+      "answer": "C",
+      "why": "Clearing the log is a classic attempt to hide tracks."
+    },
+    {
+      "id": "s12-scenario",
+      "section": "s12-windows-and-active-directory",
+      "type": "scenario",
+      "prompt": "At 2 AM a server shows its security log cleared (1102) and a new member added to the local administrators group. What do you do?",
+      "rubric": [
+        "Treats it as high severity and escalates quickly",
+        "Checks who did it (account, logon type, source) and the time",
+        "Looks for other changes: new accounts, services, scheduled tasks, process creations",
+        "Preserves evidence, does not 'fix' it silently, isolates the host if authorised",
+        "Documents times and facts clearly"
+      ]
+    },
+    {
+      "id": "s13-q1",
+      "section": "s13-network-monitoring-and-ids",
+      "type": "mcq",
+      "objective": "Compare IDS and IPS",
+      "prompt": "An IPS differs from an IDS because it:",
+      "options": {
+        "A": "Only keeps logs",
+        "B": "Sits in the traffic path and can block",
+        "C": "Works only on endpoints",
+        "D": "Never generates alerts"
+      },
+      "answer": "B",
+      "why": "An IPS is inline and can prevent traffic as well as alert."
+    },
+    {
+      "id": "s13-q2",
+      "section": "s13-network-monitoring-and-ids",
+      "type": "mcq",
+      "objective": "Recognise a SYN flood",
+      "prompt": "Thousands of SYN packets with very few completed handshakes most likely indicate:",
+      "options": {
+        "A": "Normal browsing",
+        "B": "A SYN flood (denial of service attempt)",
+        "C": "A backup job",
+        "D": "DNS tunnelling"
+      },
+      "answer": "B",
+      "why": "Half-open connections piling up is the SYN flood signature."
+    },
+    {
+      "id": "s13-q3",
+      "section": "s13-network-monitoring-and-ids",
+      "type": "mcq",
+      "objective": "Recognise beaconing",
+      "prompt": "A host connects to the same outside address every 60 seconds with tiny amounts of data. This pattern suggests:",
+      "options": {
+        "A": "Beaconing to a command server",
+        "B": "A large download",
+        "C": "A software update",
+        "D": "Port scanning"
+      },
+      "answer": "A",
+      "why": "Regular, small, repeated connections are typical of malware check-ins."
+    },
+    {
+      "id": "s13-q4",
+      "section": "s13-network-monitoring-and-ids",
+      "type": "mcq",
+      "objective": "Choose monitoring methods",
+      "prompt": "Why are network metadata or flow logs often more useful than full packet capture for everyday work?",
+      "options": {
+        "A": "They contain every byte of content",
+        "B": "They're small enough to keep longer and show who talked to whom, even when traffic is encrypted",
+        "C": "They block attacks",
+        "D": "They replace the firewall"
+      },
+      "answer": "B",
+      "why": "Metadata is cheaper to store and still reveals behaviour."
+    },
+    {
+      "id": "s13-scenario",
+      "section": "s13-network-monitoring-and-ids",
+      "type": "scenario",
+      "prompt": "An IDS alerts on SSH brute-force attempts from an external IP against a Linux server. Describe what you check and do.",
+      "rubric": [
+        "Checks whether any login succeeded (auth log)",
+        "Looks at volume, timing and other targeted hosts",
+        "Checks the source reputation and whether SSH should be exposed",
+        "Blocks or rate-limits the source within authority",
+        "Escalates if there was a success, with notes"
+      ]
+    },
+    {
+      "id": "s14-q1",
+      "section": "s14-detection-engineering-and-hunting",
+      "type": "mcq",
+      "objective": "Know detection types",
+      "prompt": "A rule that fires when many failed logins are followed by a success from the same source is a:",
+      "options": {
+        "A": "Hash match",
+        "B": "Sequence / correlation rule",
+        "C": "Signature for a virus",
+        "D": "Firewall rule"
+      },
+      "answer": "B",
+      "why": "It links related events in order."
+    },
+    {
+      "id": "s14-q2",
+      "section": "s14-detection-engineering-and-hunting",
+      "type": "mcq",
+      "objective": "Know portable rule formats",
+      "prompt": "Sigma is best described as:",
+      "options": {
+        "A": "A malware family",
+        "B": "A product-neutral format for writing log detections",
+        "C": "A firewall brand",
+        "D": "A type of ransomware"
+      },
+      "answer": "B",
+      "why": "Sigma rules can be translated for many SIEMs."
+    },
+    {
+      "id": "s14-q3",
+      "section": "s14-detection-engineering-and-hunting",
+      "type": "mcq",
+      "objective": "Start a hunt correctly",
+      "prompt": "A threat hunt should begin with:",
+      "options": {
+        "A": "A random search",
+        "B": "A hypothesis about attacker behaviour",
+        "C": "Deleting old logs",
+        "D": "Waiting for an alert"
+      },
+      "answer": "B",
+      "why": "Hunts are hypothesis-driven."
+    },
+    {
+      "id": "s14-q4",
+      "section": "s14-detection-engineering-and-hunting",
+      "type": "mcq",
+      "objective": "Explain tuning",
+      "prompt": "Why do teams tune detections?",
+      "options": {
+        "A": "To make more alerts",
+        "B": "To cut false positives so real alerts get attention, without missing real attacks",
+        "C": "To save electricity",
+        "D": "To hide incidents"
+      },
+      "answer": "B",
+      "why": "Tuning keeps alerts useful."
+    },
+    {
+      "id": "s14-scenario",
+      "section": "s14-detection-engineering-and-hunting",
+      "type": "scenario",
+      "prompt": "Sketch a detection for 'off-hours privileged login': data source, logic, severity, likely false positives and first response steps.",
+      "rubric": [
+        "Names a suitable log source (auth/identity logs)",
+        "Defines logic (admin account, outside normal hours or new location)",
+        "Assigns a sensible severity (high)",
+        "Lists plausible false positives (on-call work, maintenance)",
+        "Gives first steps (verify with owner, check session activity, escalate)"
+      ]
+    },
+    {
+      "id": "s15-q1",
+      "section": "s15-incident-response-and-reporting",
+      "type": "mcq",
+      "objective": "Know the NIST Rev. 2 phases",
+      "prompt": "In the four-phase NIST (Rev. 2) model, containment, eradication and recovery belong to:",
+      "options": {
+        "A": "Phase 1",
+        "B": "Phase 2",
+        "C": "Phase 3",
+        "D": "Phase 4"
+      },
+      "answer": "C",
+      "why": "Phase 3 is Containment, Eradication and Recovery."
+    },
+    {
+      "id": "s15-q2",
+      "section": "s15-incident-response-and-reporting",
+      "type": "mcq",
+      "objective": "Run lessons learned",
+      "prompt": "A good 'lessons learned' review is:",
+      "options": {
+        "A": "A search for who to blame",
+        "B": "A blameless review that improves process and detections",
+        "C": "Skipped for small incidents",
+        "D": "Done only by managers"
+      },
+      "answer": "B",
+      "why": "Fix systems and process, not people."
+    },
+    {
+      "id": "s15-q3",
+      "section": "s15-incident-response-and-reporting",
+      "type": "mcq",
+      "objective": "Brief a manager",
+      "prompt": "When explaining an incident to a non-technical manager you should lead with:",
+      "options": {
+        "A": "Technical details of the malware",
+        "B": "Impact, what is being done, and when the next update is",
+        "C": "A list of IP addresses",
+        "D": "An apology"
+      },
+      "answer": "B",
+      "why": "Use Situation, Impact, Action, Next."
+    },
+    {
+      "id": "s15-q4",
+      "section": "s15-incident-response-and-reporting",
+      "type": "mcq",
+      "objective": "Know the current NIST guidance",
+      "prompt": "In April 2025 NIST replaced SP 800-61 Rev. 2 with Rev. 3, which organises incident response around:",
+      "options": {
+        "A": "The four old phases only",
+        "B": "The six NIST CSF 2.0 functions",
+        "C": "The OSI model",
+        "D": "ISO 27001 clauses"
+      },
+      "answer": "B",
+      "why": "Rev. 3 is a CSF 2.0 community profile."
+    },
+    {
+      "id": "s15-scenario",
+      "section": "s15-incident-response-and-reporting",
+      "type": "scenario",
+      "prompt": "Write a four-sentence update for a manager: ransomware was found on three laptops and has been contained. Use Situation, Impact, Action, Next.",
+      "rubric": [
+        "Situation stated plainly without jargon",
+        "Impact: three laptops, what is and isn't known about data",
+        "Action: isolation and steps taken",
+        "Next: checks under way and a time for the next update",
+        "Does not speculate or blame"
+      ]
+    },
+    {
+      "id": "s16-q1",
+      "section": "s16-soar-ticketing-and-investigation-tools",
+      "type": "mcq",
+      "objective": "Explain SOAR",
+      "prompt": "A SOAR playbook is:",
+      "options": {
+        "A": "A list of passwords",
+        "B": "Automated or semi-automated response steps for a type of alert",
+        "C": "A firewall rule",
+        "D": "A malware sample"
+      },
+      "answer": "B",
+      "why": "Playbooks automate repeatable steps with guard-rails."
+    },
+    {
+      "id": "s16-q2",
+      "section": "s16-soar-ticketing-and-investigation-tools",
+      "type": "mcq",
+      "objective": "Use public tools safely",
+      "prompt": "Before uploading a suspicious file from your company to a public online sandbox you should:",
+      "options": {
+        "A": "Upload it immediately",
+        "B": "Check whether it contains confidential data and use approved private tools, or look up only the hash",
+        "C": "Email it to friends",
+        "D": "Rename it"
+      },
+      "answer": "B",
+      "why": "Many public services share submissions."
+    },
+    {
+      "id": "s16-q3",
+      "section": "s16-soar-ticketing-and-investigation-tools",
+      "type": "mcq",
+      "objective": "Design safe automation",
+      "prompt": "Why require human approval before high-impact automated actions?",
+      "options": {
+        "A": "Automation is always wrong",
+        "B": "To avoid isolating critical systems or blocking critical partners by mistake",
+        "C": "To slow the SOC down",
+        "D": "Because regulators forbid automation"
+      },
+      "answer": "B",
+      "why": "Guard-rails prevent costly false positives."
+    },
+    {
+      "id": "s16-q4",
+      "section": "s16-soar-ticketing-and-investigation-tools",
+      "type": "mcq",
+      "objective": "Know intel formats",
+      "prompt": "STIX and TAXII are:",
+      "options": {
+        "A": "Two antivirus products",
+        "B": "Standards for formatting and sharing threat intelligence",
+        "C": "Types of firewall",
+        "D": "Windows event IDs"
+      },
+      "answer": "B",
+      "why": "STIX is the format; TAXII is the transport."
+    },
+    {
+      "id": "s16-scenario",
+      "section": "s16-soar-ticketing-and-investigation-tools",
+      "type": "scenario",
+      "prompt": "Threat intelligence flags an IP that belongs to one of your vendors. Describe your process.",
+      "rubric": [
+        "Checks the source and confidence of the intel",
+        "Checks whether traffic with that vendor is expected and the recent activity",
+        "Does not auto-block a critical partner",
+        "Contacts the owner or vendor contact through the proper channel",
+        "Documents and escalates if unclear"
+      ]
+    },
+    {
+      "id": "s17-q1",
+      "section": "s17-cloud-ueba-vulnerability-management",
+      "type": "mcq",
+      "objective": "Explain shared responsibility",
+      "prompt": "In the cloud shared responsibility model, YOU are usually responsible for:",
+      "options": {
+        "A": "The provider's data centre hardware",
+        "B": "Your identities, configuration and data",
+        "C": "The provider's core network",
+        "D": "Nothing"
+      },
+      "answer": "B",
+      "why": "The provider secures the cloud; you secure what you put in it."
+    },
+    {
+      "id": "s17-q2",
+      "section": "s17-cloud-ueba-vulnerability-management",
+      "type": "mcq",
+      "objective": "Read CVSS",
+      "prompt": "A vulnerability with a CVSS score of 9.8 is rated:",
+      "options": {
+        "A": "Low",
+        "B": "Medium",
+        "C": "High",
+        "D": "Critical"
+      },
+      "answer": "D",
+      "why": "9.0 to 10.0 is Critical."
+    },
+    {
+      "id": "s17-q3",
+      "section": "s17-cloud-ueba-vulnerability-management",
+      "type": "mcq",
+      "objective": "Explain UEBA",
+      "prompt": "UEBA mainly works by:",
+      "options": {
+        "A": "Blocking all new users",
+        "B": "Learning normal behaviour and flagging unusual behaviour",
+        "C": "Encrypting logs",
+        "D": "Replacing the SIEM"
+      },
+      "answer": "B",
+      "why": "It baselines users and entities."
+    },
+    {
+      "id": "s17-q4",
+      "section": "s17-cloud-ueba-vulnerability-management",
+      "type": "mcq",
+      "objective": "Spot cloud risks",
+      "prompt": "A cloud storage bucket that has been made public is mainly a risk of:",
+      "options": {
+        "A": "Slower backups",
+        "B": "Data exposure to the internet",
+        "C": "Higher electricity cost",
+        "D": "Password expiry"
+      },
+      "answer": "B",
+      "why": "Public buckets leak data."
+    },
+    {
+      "id": "s17-scenario",
+      "section": "s17-cloud-ueba-vulnerability-management",
+      "type": "scenario",
+      "prompt": "A critical vulnerability is announced in software that your company runs on an internet-facing server. What does the SOC check and do?",
+      "rubric": [
+        "Confirms whether the software and version are in use",
+        "Checks exposure (internet-facing) and exploitation status",
+        "Looks for exploit attempts in logs and IDS/WAF",
+        "Coordinates with the owner on patch or mitigation",
+        "Increases monitoring and documents"
+      ]
+    }
+  ]
+}
