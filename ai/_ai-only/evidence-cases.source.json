@@ -1,0 +1,428 @@
+{
+  "version": 1,
+  "note": "AI-ONLY source of truth for evidence cases. Contains expected verdicts and rubrics. Learners: reading this defeats your own learning.",
+  "prompts": [
+    "What is your verdict: close, escalate, or insufficient evidence (keep it open)?",
+    "What evidence supports your verdict? If something is missing, name exactly what and where you would get it.",
+    "How would different findings change your decision?",
+    "What safe interim action would you take right now, and when will you review again?",
+    "Write a 3-line ticket note: what you know, what you don't know, and the next step."
+  ],
+  "scoring": {
+    "max_points": 10,
+    "criteria": [
+      {
+        "id": "verdict",
+        "points": 2,
+        "what": "Verdict is reasonable for the evidence. 2 = acceptable verdict; 1 = defensible but over- or under-cautious; 0 = unsafe (for example closing when key evidence is missing or the evidence shows compromise)."
+      },
+      {
+        "id": "evidence",
+        "points": 2,
+        "what": "Insufficient-evidence cases: names specific missing data and where to get it. Sufficient-evidence cases: cites the specific deciding evidence. 2 = at least two specifics; 1 = one or vague; 0 = none."
+      },
+      {
+        "id": "change",
+        "points": 2,
+        "what": "Explains how particular findings would change the decision, in both directions."
+      },
+      {
+        "id": "interim",
+        "points": 2,
+        "what": "Proposes a safe, proportionate interim action and a review time. No reckless closure and no destructive over-reaction."
+      },
+      {
+        "id": "document",
+        "points": 2,
+        "what": "Records knowns, unknowns and the next step clearly, without overclaiming."
+      }
+    ],
+    "caps": {
+      "premature_close": "If the learner closes a case whose evidence is insufficient or shows compromise, cap total at 3 and set premature_close = true when recording.",
+      "vague_insufficient": "If the learner says 'insufficient evidence' but names fewer than two specific missing items, cap total at 4.",
+      "over_certainty": "If the learner declares a confirmed breach or malicious intent without supporting evidence, cap total at 6.",
+      "over_caution": "If the learner answers 'insufficient' when the case clearly has sufficient evidence, cap total at 5 and explain what already answered the question."
+    },
+    "mix_rule": "Give each learner at least one sufficient-evidence case and at least two insufficient-evidence cases in a session of three, so 'insufficient' is never a safe default.",
+    "neutrality_rule": "Never hint which kind of case it is. Present the alert and evidence exactly as written, and ask the five prompts in order."
+  },
+  "cases": [
+    {
+      "id": "ec-01",
+      "title": "New-country sign-in for a senior account",
+      "alert": "Successful sign-in to the CFO's email account from a country the user has not signed in from before. Severity: Medium.",
+      "context": "Executive account; the mailbox holds finance data. It is 14:10 on a Tuesday.",
+      "evidence": [
+        "Sign-in succeeded at 13:52 UTC from 203.0.113.77 (a hosting-provider address range)",
+        "Only this one sign-in event is visible. Sign-in logs older than 24 hours are not retained",
+        "The user's calendar shows no out-of-office entry",
+        "No endpoint (EDR) telemetry is available for the device used"
+      ],
+      "expected": {
+        "evidence_sufficient": false,
+        "acceptable_verdicts": [
+          "insufficient",
+          "escalate"
+        ],
+        "ideal": "Insufficient evidence (or escalate with unknowns stated), with a quick, safe plan to confirm with the user through a trusted channel."
+      },
+      "known_gaps": [
+        "Authentication method and MFA result for the sign-in",
+        "Device ID or user-agent, and whether the device is known",
+        "The user's normal sign-in baseline (locations, hours)",
+        "Whether the user is travelling or using a VPN or proxy",
+        "Mailbox activity after the sign-in (new inbox rules, forwarding, mass reads)",
+        "Older sign-in history (a retention gap)"
+      ],
+      "decision_changers": [
+        {
+          "finding": "Mailbox audit shows a new forwarding rule or mass download after the sign-in",
+          "effect": "Likely account takeover: escalate as High, reset credentials, revoke sessions"
+        },
+        {
+          "finding": "User confirms travel and the device is registered with MFA passed",
+          "effect": "Likely benign: close with documented confirmation"
+        },
+        {
+          "finding": "The sign-in used a legacy protocol or no MFA",
+          "effect": "Raise the risk even if the user claims travel"
+        }
+      ],
+      "safe_interim": [
+        "Contact the user through a known-good channel, not by replying to anything in the account",
+        "Preserve the sign-in record and ask for longer retention",
+        "Add the account to a watchlist and consider step-up re-authentication",
+        "Set a review time and escalate if the user cannot be reached"
+      ],
+      "reckless": [
+        "Close as a false positive because 'executives travel'",
+        "Declare the mailbox breached without evidence",
+        "Disable the CFO's account with no approval or notice",
+        "Contact the user by replying to a message inside the suspect mailbox"
+      ],
+      "teaching_note": "One event and short retention leave real gaps. A senior account means a short time-box."
+    },
+    {
+      "id": "ec-02",
+      "title": "Office app launches encoded PowerShell",
+      "alert": "EDR: Word spawned PowerShell with an encoded command, followed by an outbound connection. Severity: High.",
+      "context": "Finance laptop. The user opened an emailed invoice attachment 3 minutes earlier.",
+      "evidence": [
+        "Full process tree: WINWORD.EXE then powershell.exe -enc <long string> then rundll32.exe",
+        "The decoded command downloads a file from hxxp://invoice-update[.]example/a.bin",
+        "The domain is flagged malicious by three independent reputation sources and was registered 2 days ago",
+        "The attachment's hash appears in a published phishing-campaign report",
+        "EDR shows the connection succeeded and a new scheduled task was created"
+      ],
+      "expected": {
+        "evidence_sufficient": true,
+        "acceptable_verdicts": [
+          "escalate"
+        ],
+        "ideal": "Escalate and contain now (isolate the host if authorised, preserve evidence, find other recipients)."
+      },
+      "known_gaps": [],
+      "decision_changers": [
+        {
+          "finding": "Other hosts show the same task or domain",
+          "effect": "Widen the incident scope"
+        },
+        {
+          "finding": "EDR reports the download was blocked and no persistence exists",
+          "effect": "Lower impact, but still contain and investigate"
+        }
+      ],
+      "safe_interim": [
+        "Isolate the host through EDR if authorised (do not power off)",
+        "Block the domain and the file hash",
+        "Find other recipients of the email and reset the user's credentials",
+        "Escalate with the process tree and a timeline"
+      ],
+      "reckless": [
+        "Answer 'insufficient evidence' and wait",
+        "Close because antivirus did not fire",
+        "Power off and reimage immediately without preserving evidence"
+      ],
+      "teaching_note": "The evidence is strong. Asking for more data here only delays containment."
+    },
+    {
+      "id": "ec-03",
+      "title": "Web attack signature, but no web logs",
+      "alert": "IDS: SQL injection pattern in an HTTP request to the customer portal. Severity: Medium.",
+      "context": "Internet-facing customer portal that holds customer personal data.",
+      "evidence": [
+        "The IDS captured one request with a quote-and-UNION pattern in a URL parameter at 02:14 UTC from 198.51.100.23",
+        "The IDS cannot see the server's response (traffic is encrypted after the load balancer)",
+        "The web server access logs and database error logs for this host are not ingested into the SIEM",
+        "The web application firewall (WAF) log is not available for this period"
+      ],
+      "expected": {
+        "evidence_sufficient": false,
+        "acceptable_verdicts": [
+          "insufficient",
+          "escalate"
+        ],
+        "ideal": "Insufficient evidence (or escalate with unknowns) while logs are requested and the source is rate-limited if authorised."
+      },
+      "known_gaps": [
+        "Web server access log: status code and response size for the request",
+        "Database or application error logs around 02:14",
+        "The WAF action (blocked or allowed)",
+        "Other requests from the same source before and after",
+        "Whether the application uses parameterised queries (owner knowledge)",
+        "Why the web logs are not ingested (the log-source gap itself needs reporting)"
+      ],
+      "decision_changers": [
+        {
+          "finding": "Server log shows HTTP 200 with an unusually large response, or database errors",
+          "effect": "Likely successful injection: escalate as High and involve the application owner and the data-protection contact"
+        },
+        {
+          "finding": "The WAF blocked it and logs show only that single request",
+          "effect": "Likely a failed attempt: close or low priority with documented evidence, then tune"
+        }
+      ],
+      "safe_interim": [
+        "Request web, WAF and database logs from the owner",
+        "Search whatever logs exist for other requests from the same source",
+        "Rate-limit or block the source at the WAF or firewall if authorised",
+        "Tell the application owner and set a review time",
+        "Report the missing log source as a visibility gap"
+      ],
+      "reckless": [
+        "Close it as 'just a scanner'",
+        "Declare a data breach",
+        "Take the portal offline without approval"
+      ],
+      "teaching_note": "The sensitive data and the blind spot matter more than the Medium label."
+    },
+    {
+      "id": "ec-04",
+      "title": "Port scan from the vulnerability scanner",
+      "alert": "IDS: one internal host probed about 1,000 ports on 40 servers. Severity: Medium.",
+      "context": "The source address is 192.0.2.50.",
+      "evidence": [
+        "192.0.2.50 is listed in the asset inventory as the company's approved vulnerability scanner",
+        "A change ticket approves a scan of these servers from 02:00 to 04:00 today, approved by the infrastructure owner",
+        "The alert time is 02:12",
+        "The traffic matches the scanner's usual pattern and stops at 03:41",
+        "No other alerts involve this host or the targets"
+      ],
+      "expected": {
+        "evidence_sufficient": true,
+        "acceptable_verdicts": [
+          "close"
+        ],
+        "ideal": "Close as a false positive, citing the change ticket and the inventory entry. Suggest a time-boxed tuning rule rather than disabling the detection."
+      },
+      "known_gaps": [],
+      "decision_changers": [
+        {
+          "finding": "The same source scans outside the approved window or targets systems that are not on the ticket",
+          "effect": "Reopen and escalate"
+        }
+      ],
+      "safe_interim": [
+        "Close with a note citing the change ticket and inventory entry",
+        "Suggest a time-boxed tuning rule, not a permanent disable"
+      ],
+      "reckless": [
+        "Escalate it as an attack",
+        "Keep asking for more data when the ticket and inventory already answer the question",
+        "Permanently disable the scan detection"
+      ],
+      "teaching_note": "You already hold the evidence that answers the question. Demanding more wastes time."
+    },
+    {
+      "id": "ec-05",
+      "title": "Large upload from a server",
+      "alert": "Firewall: 8 GB sent from a database server to an external cloud-storage address at 02:30. Severity: Medium.",
+      "context": "The server hosts internal reporting data. Normal outbound traffic is under 100 MB per day.",
+      "evidence": [
+        "Flow data shows the 8 GB upload over HTTPS to 198.51.100.200 (owned by a public cloud-storage provider)",
+        "No EDR agent is installed on this server",
+        "Proxy and DLP logs do not cover server traffic",
+        "The backup schedule and any approved data-transfer ticket are unknown"
+      ],
+      "expected": {
+        "evidence_sufficient": false,
+        "acceptable_verdicts": [
+          "insufficient",
+          "escalate"
+        ],
+        "ideal": "Insufficient evidence (or escalate with unknowns), with an urgent call to the server owner and a short review time."
+      },
+      "known_gaps": [
+        "Which process on the server started the transfer",
+        "Whether a backup or migration job is scheduled (owner, change tickets)",
+        "Whether the destination account is company-owned",
+        "What data was in the transfer (classification)",
+        "The server's normal outbound baseline",
+        "Why there is no endpoint agent coverage"
+      ],
+      "decision_changers": [
+        {
+          "finding": "The server owner confirms an approved backup to the company's own cloud account",
+          "effect": "Likely benign: close with confirmation and fix the missing documentation"
+        },
+        {
+          "finding": "No ticket exists and the destination is a personal or unknown account",
+          "effect": "Possible exfiltration: escalate as High, isolate with approval, preserve data"
+        }
+      ],
+      "safe_interim": [
+        "Contact the server owner now through a known channel",
+        "Check change tickets and backup schedules",
+        "Preserve flow logs and ask for proxy or packet data if available",
+        "Ask the network team to alert on further transfers to that address",
+        "Use a short review time because sensitive data may be involved"
+      ],
+      "reckless": [
+        "Close it because 'it was probably a backup'",
+        "Wipe or power off the server",
+        "Accuse a named employee"
+      ],
+      "teaching_note": "Volume plus an unmonitored server means a short time-box, not a shrug."
+    },
+    {
+      "id": "ec-06",
+      "title": "Log cleared, new admin and a new service",
+      "alert": "Server: the security log was cleared, then a user was added to the local administrators group, then a new service was installed. Severity: High.",
+      "context": "Application server. All three events happened within 10 minutes at 03:05 UTC.",
+      "evidence": [
+        "All three events came from the account svc-deploy-test using logon type 10 (Remote Desktop) from 203.0.113.99",
+        "The account's owner is on leave and says they have not logged in",
+        "No change ticket or maintenance window exists for tonight",
+        "EDR shows the new service launches an unsigned program from a temporary folder",
+        "The source address is not in any company range"
+      ],
+      "expected": {
+        "evidence_sufficient": true,
+        "acceptable_verdicts": [
+          "escalate"
+        ],
+        "ideal": "Escalate immediately as a likely compromise. Isolate and preserve evidence per authority."
+      },
+      "known_gaps": [],
+      "decision_changers": [
+        {
+          "finding": "EDR shows the program was blocked and contained",
+          "effect": "Lower impact, but keep the incident open to find the entry route"
+        }
+      ],
+      "safe_interim": [
+        "Escalate immediately as a likely compromise",
+        "Isolate the server through EDR if authorised (keep it powered on)",
+        "Disable the suspect account with approval",
+        "Preserve the logs and the unsigned program",
+        "Look for the same account and address on other hosts"
+      ],
+      "reckless": [
+        "Ask for more evidence before telling anyone",
+        "Close it as maintenance",
+        "Delete the new service and move on without preserving evidence"
+      ],
+      "teaching_note": "Several independent signals agree. Waiting would be the risky choice."
+    },
+    {
+      "id": "ec-07",
+      "title": "Regular connections to an unknown address",
+      "alert": "Network analytics: a laptop connects to the same external IP every 60 seconds. Severity: Low.",
+      "context": "A marketing laptop. The pattern has run for 3 days.",
+      "evidence": [
+        "Flow data: small packets every 60 seconds to 198.51.100.77 on TCP 443",
+        "No DNS logs are available for this laptop",
+        "No endpoint telemetry: the laptop's agent last checked in 9 days ago",
+        "The IP has no reputation data, good or bad"
+      ],
+      "expected": {
+        "evidence_sufficient": false,
+        "acceptable_verdicts": [
+          "insufficient",
+          "escalate"
+        ],
+        "ideal": "Insufficient evidence with a concrete same-day plan (or escalate with unknowns)."
+      },
+      "known_gaps": [
+        "Which process makes the connection",
+        "The domain name or TLS server name behind the IP",
+        "Whether it is a known update, sync or monitoring service",
+        "Why the endpoint agent stopped reporting (a gap and a risk in itself)",
+        "Whether other laptops talk to the same IP"
+      ],
+      "decision_changers": [
+        {
+          "finding": "The IP belongs to a known update or cloud-sync service the laptop uses",
+          "effect": "Likely benign: close and add to the known-good list"
+        },
+        {
+          "finding": "The process is unknown or unsigned, or other hosts show the same pattern",
+          "effect": "Possible beaconing: escalate and isolate"
+        }
+      ],
+      "safe_interim": [
+        "Search flow data for other hosts contacting the same IP",
+        "Ask the user and IT about installed software",
+        "Get the endpoint agent reporting again",
+        "Set a review time within the day; Low severity still deserves follow-up"
+      ],
+      "reckless": [
+        "Close it as noise because the severity is Low",
+        "Declare the laptop infected",
+        "Block the IP network-wide without checking what else uses it"
+      ],
+      "teaching_note": "Regular timing is suspicious but not conclusive. The silent agent is a finding too."
+    },
+    {
+      "id": "ec-08",
+      "title": "Reported phishing email with only a screenshot",
+      "alert": "A user reports a suspicious 'password expiry' email and sends a screenshot.",
+      "context": "HR department. The email gateway keeps messages for only 3 days, and the email arrived 5 days ago.",
+      "evidence": [
+        "The screenshot shows the sender's display name but not the full address or headers",
+        "The link text reads 'Reset password' but the real URL is not visible",
+        "The user says they did not click anything but is not sure",
+        "The gateway no longer holds the original message",
+        "No other reports of the same email so far"
+      ],
+      "expected": {
+        "evidence_sufficient": false,
+        "acceptable_verdicts": [
+          "insufficient",
+          "escalate"
+        ],
+        "ideal": "Insufficient evidence with a clear plan to get the original message and check click activity."
+      },
+      "known_gaps": [
+        "The original message with full headers",
+        "The real destination URL of the link",
+        "Who else received it",
+        "Whether anyone clicked or entered credentials (proxy and sign-in logs)",
+        "Whether similar mail reached others (search by sender or subject in any logs that exist)"
+      ],
+      "decision_changers": [
+        {
+          "finding": "Proxy logs show the user visited a lookalike login page",
+          "effect": "Likely credential exposure: reset the password, revoke sessions, escalate"
+        },
+        {
+          "finding": "The original turns out to be a legitimate internal HR notice",
+          "effect": "Close with confirmation"
+        }
+      ],
+      "safe_interim": [
+        "Ask the user to forward the original as an attachment, not a screenshot",
+        "Search proxy and DNS logs for the user's activity",
+        "Check the user's sign-in logs for anything odd",
+        "Warn the HR team to report similar emails",
+        "Ask for longer email retention for investigations"
+      ],
+      "reckless": [
+        "Close it because 'no one clicked'",
+        "Tell the user it was fine without checking",
+        "Block all password-reset emails company-wide"
+      ],
+      "teaching_note": "'I didn't click' is a claim, not evidence. Find the logs that can confirm it."
+    }
+  ]
+}
